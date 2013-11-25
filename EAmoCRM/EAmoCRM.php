@@ -2,7 +2,7 @@
 /**
  * EAmoCRM class file.
  *
- * @package YiiLessPhp
+ * @package YiiAmoCRM
  * @author dZ <mail@dotzero.ru>
  * @link http://www.dotzero.ru
  * @link https://github.com/dotzero/YiiAmoCRM
