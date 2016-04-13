@@ -1,5 +1,5 @@
 {
-    "name": "dotzero/yii-insertupdate-behavior",
+    "name": "dotzero/yii-amocrm",
     "description": "Расширения для Yii Framework выступающее в качестве враппера для обращения к API сайта amoCRM",
     "license": "MIT",
     "keywords": ["yii", "extension", "behavior"],
