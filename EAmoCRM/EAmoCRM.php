@@ -2,13 +2,15 @@
 /**
  * EAmoCRM class file.
  *
- * @package YiiAmoCRM
- * @author dZ <mail@dotzero.ru>
- * @link http://www.dotzero.ru
- * @link https://github.com/dotzero/YiiAmoCRM
- * @link https://www.amocrm.ru/add-ons/api.php
- * @license MIT
- * @version 1.0 (25-nov-2013)
+ * @package EAmoCRM
+ * @version 1.0
+ * @author dotzero <mail@dotzero.ru>
+ * @link http://www.dotzero.ru/
+ * @link https://github.com/dotzero/yii-amocrm
+ * @link https://developers.amocrm.ru/rest_api/
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
  */
 
 /**
@@ -45,26 +47,32 @@ class EAmoCRM extends CApplicationComponent
      * @var null|string Персональный поддомен на сайте amoCRM
      */
     public $subdomain = null;
+
     /**
      * @var null|string Логин на сайте amoCRM
      */
     public $login = null;
+
     /**
      * @var null|string Пароль на сайте amoCRM
      */
     public $password = null;
+
     /**
      * @var null|string API ключ для доступа
      */
     public $hash = null;
+
     /**
      * @var mixed Сообщение о последней ошибке
      */
     private $lastError = null;
+
     /**
      * @var mixed Код последней ошибки
      */
     private $lastErrorNo = null;
+
     /**
      * Типы задач
      */

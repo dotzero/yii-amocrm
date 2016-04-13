@@ -1,5 +1,8 @@
 # Yii AmoCRM
 
+[![Latest Stable Version](https://poser.pugx.org/dotzero/yii-amocrm/version)](https://packagist.org/packages/dotzero/yii-amocrm)
+[![License](https://poser.pugx.org/dotzero/yii-amocrm/license)](https://packagist.org/packages/dotzero/yii-amocrm)
+
 **EAmoCRM** это расширение для **Yii PHP framework** которое выступает в качестве
 простого прокси для обращения к API сайта [amoCRM](https://www.amocrm.ru/add-ons/api.php).
 Структуры и данных для передачи нелогичны, за дополнительными разъяснениями
