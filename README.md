@@ -3,73 +3,78 @@
 [![Latest Stable Version](https://poser.pugx.org/dotzero/yii-amocrm/version)](https://packagist.org/packages/dotzero/yii-amocrm)
 [![License](https://poser.pugx.org/dotzero/yii-amocrm/license)](https://packagist.org/packages/dotzero/yii-amocrm)
 
-**EAmoCRM** это расширение для **Yii PHP framework** которое выступает в качестве
-простого прокси для обращения к API сайта [amoCRM](https://www.amocrm.ru/add-ons/api.php).
-Структуры и данных для передачи нелогичны, за дополнительными разъяснениями
-можно обратится к официальный документации [amoCRM](https://www.amocrm.ru/add-ons/api.php).
+**EAmoCRM** это расширение для **Yii PHP framework** реализующее клиент для работы с API amoCRM
+используя библиотеку [amocrm-php](https://github.com/dotzero/amocrm-php).
 
 ## Требования:
 
-Yii Framework 1.1.0 или новее
+- [Yii Framework](https://github.com/yiisoft/yii) 1.1.14 or above
+- [Composer](http://getcomposer.org/doc/)
 
-## Установка:
+## Установка
 
-- Скопировать папку `EAmoCRM` в `protected/extensions`
-- Добавить в секцию `components` конфигурационного файла:
+### Через composer:
+
+```bash
+$ composer require dotzero/yii-amocrm
+```
+
+-  Добавить `amocrm` в секцию `components` конфигурационного файла:
 
 ```php
-<?php
+'aliases' => array(
+    ...
+    'vendor' => realpath(__DIR__ . '/../../vendor'),
+),
+'components' => array(
+    ...
     'amocrm' => array(
-        'class' => 'application.extensions.EAmoCRM.EAmoCRM',
+        'class' => 'vendor.dotzero.yii-amocrm.EAmoCRM',
         'subdomain' => 'example', // Персональный поддомен на сайте amoCRM
         'login' => 'login@mail.com', // Логин на сайте amoCRM
-        'password' => '123456', // Пароль на сайте amoCRM
-        'hash' => '00000000000000000000000000000000', // Вместо пароля можно использовать API ключ
+        'hash' => '00000000000000000000000000000000', // Хеш на сайте amoCRM
     ),
+),
 ```
 
 ## Пример использования:
 
 ```php
-<?php
-    // Проверка авторизации на сайте amoCRM
-    $result = Yii::app()->amocrm->ping();
+try {
+    $amo = Yii::app()->amocrm->getClient();
 
-    // Получение 1 страницы со списком контактов, >на странице 20 записей
-    $result = Yii::app()->amocrm->listContacts(1, 20);
+    // Получение экземпляра модели для работы с аккаунтом
+    $account = $amo->account;
+
+    // Вывод информации об аккаунте
+    print_r($account->apiCurrent());
+
+    // Получение экземпляра модели для работы с контактами
+    $contact = $amo->contact;
+
+    // Заполнение полей модели
+    $contact['name'] = 'ФИО';
+    $contact['request_id'] = '123456789';
+    $contact['date_create'] = '-2 DAYS';
+    $contact['responsible_user_id'] = 697344;
+    $contact['company_name'] = 'ООО Тестовая компания';
+    $contact['tags'] = ['тест1', 'тест2'];
+    $contact->addCustomField(448, [
+        ['+79261112233', 'WORK'],
+    ]);
+
+    // Добавление нового контакта и получение его ID
+    print_r($contact->apiAdd());
+
+} catch (\AmoCRM\Exception $e) {
+    printf('Error (%d): %s' . PHP_EOL, $e->getCode(), $e->getMessage());
+}
 ```
 
-## Доступные методы
+## Документация
 
-* Общее
-    * `ping()` - Проверка авторизации
-* Контакты
-    * `listContacts($page, $onpage)` - Получение страницы со списком контактов
-    * `searchContacts($keyword, $page, $onpage)` - Поиск контактов
-    * `getContact($id)` - Получение детальной страницы контакта
-    * `addContact($data)` - Добавление контакта
-    * `editContact($id, $data)` - Редактирование контакта
-    * `deleteContact($id)` - Удаление контакта
-* Сделки
-    * `listDeals($page, $onpage)` - Получение страницы со списком сделок
-    * `searchDeals($keyword, $page, $onpage)`- Поиск сделок
-    * `addDeal($data)` - Добавление сделки
-    * `editDeal($id, $data)` - Редактирование сделки
-    * `deleteDeal($id)` - Удаление сделки
-* Примечания
-    * `addContactNote($id, $message)` - Добавление примечания к контакту
-    * `addDealNote($id, $message)` - Добавление примечания к сделке
-    * `editNote($id, $message)` - Редактирование примечания
-    * `deleteNote($id)` - Удаление примечания
-* Задачи
-    * `addTask($id, $message, $date, $type)` - Добавление простой задачи
-    * `addContactTask($id, $contact, $message, $date, $type)` - Добавление задачи связанной с контактом
-    * `addDealTask($id, $deal, $message, $date, $type)` - Добавление задачи связанной со сделкой
-    * `editTask($task, $id, $message, $date, $type)` - Редактирование простой задачи
-    * `editContactTask($task, $id, $contact, $message, $date, $type)` - Редактирование задачи связанной с контактом
-    * `editDealTask($task, $id, $deal, $message, $date, $type)` - Редактирование задачи связанной со сделкой
-    * `deleteTask($task)` - Удаление задачи
-    * `completeTask($task)` - Выполнение задачи
+Смотреть оригинальную библиотеку [amocrm-php](https://github.com/dotzero/amocrm-php).
 
----
-Шлю особые лучики ненависти к компании QSOFT и их криворуким кодерам ^_^.
+## Лицензия
+
+Библиотека доступна на условиях лицензии MIT: http://www.opensource.org/licenses/mit-license.php
