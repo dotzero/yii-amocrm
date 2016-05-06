@@ -3,7 +3,7 @@
  * EAmoCRM class file.
  *
  * @package EAmoCRM
- * @version 1.0
+ * @version 1.0.0
  * @author dotzero <mail@dotzero.ru>
  * @link http://www.dotzero.ru/
  * @link https://github.com/dotzero/yii-amocrm
@@ -14,32 +14,30 @@
  */
 
 /**
- * EAmoCRM это расширение для Yii PHP framework которое выступает в качестве простого прокси для обращения
- * к API сайта amoCRM. Структуры и данных для передачи нелогичны, за дополнительными разъяснениями
- * можно обратится к официальный документации amoCRM (https://www.amocrm.ru/add-ons/api.php)
+ * EAmoCRM это расширение для Yii PHP framework реализующее
+ * клиент для работы с API amoCRM используя библиотеку amocrm-php
  *
  * Требования:
- * Yii Framework 1.1.0 или новее
+ * - Yii Framework 1.1.14 or above
+ * - Composer
  *
  * Установка:
- * - Скопировать папку EAmoCRM в 'protected/extensions'
- * - Добавить в секцию 'components' конфигурационного файла:
+ * - composer require dotzero/yii-amocrm
+ * - Добавить amocrm в секцию components конфигурационного файла:
  *
- *  'amocrm' => array(
- *      'class' => 'application.extensions.EAmoCRM.EAmoCRM',
- *      'subdomain' => 'example', // Персональный поддомен на сайте amoCRM
- *      'login' => 'login@mail.com', // Логин на сайте amoCRM
- *      'password' => '123456', // Пароль на сайте amoCRM
- *      'hash' => '00000000000000000000000000000000', // Вместо пароля можно использовать API ключ
- *  ),
- *
- * Пример использования:
- *
- * // Проверка авторизации на сайте amoCRM
- * $result = Yii::app()->amocrm->ping();
- *
- * // Получение 1 страницы со списком контактов, >на странице 20 записей
- * $result = Yii::app()->amocrm->listContacts(1, 20);
+ * 'aliases' => array(
+ *     ...
+ *     'vendor' => realpath(__DIR__ . '/../../vendor'),
+ * ),
+ * 'components' => array(
+ *     ...
+ *     'amocrm' => array(
+ *         'class' => 'vendor.dotzero.yii-amocrm.EAmoCRM',
+ *         'subdomain' => 'example', // Персональный поддомен на сайте amoCRM
+ *         'login' => 'login@mail.com', // Логин на сайте amoCRM
+ *         'hash' => '00000000000000000000000000000000', // Хеш на сайте amoCRM
+ *     ),
+ * ),
  */
 class EAmoCRM extends CApplicationComponent
 {
