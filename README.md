@@ -8,7 +8,7 @@
 
 ## Требования:
 
-- [Yii Framework](https://github.com/yiisoft/yii) 1.1.14 or above
+- [Yii Framework](https://github.com/yiisoft/yii) 1.1.14 или выше
 - [Composer](http://getcomposer.org/doc/)
 
 ## Установка
@@ -33,6 +33,12 @@ $ composer require dotzero/yii-amocrm
         'subdomain' => 'example', // Персональный поддомен на сайте amoCRM
         'login' => 'login@mail.com', // Логин на сайте amoCRM
         'hash' => '00000000000000000000000000000000', // Хеш на сайте amoCRM
+
+        // Для хранения ID полей можно воспользоваться хелпером
+        'fields' => [
+            'StatusId' => 10525225,
+            'ResponsibleUserId' => 697344,
+        ],
     ),
 ),
 ```
@@ -56,7 +62,7 @@ try {
     $contact['name'] = 'ФИО';
     $contact['request_id'] = '123456789';
     $contact['date_create'] = '-2 DAYS';
-    $contact['responsible_user_id'] = 697344;
+    $contact['responsible_user_id'] = Yii::app()->amocrm->fields['ResponsibleUserId'];
     $contact['company_name'] = 'ООО Тестовая компания';
     $contact['tags'] = ['тест1', 'тест2'];
     $contact->addCustomField(448, [
@@ -73,7 +79,7 @@ try {
 
 ## Документация
 
-Смотреть оригинальную библиотеку [amocrm-php](https://github.com/dotzero/amocrm-php).
+Смотреть документацию к библиотеке [amocrm-php](https://github.com/dotzero/amocrm-php).
 
 ## Лицензия
 

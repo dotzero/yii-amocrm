@@ -3,7 +3,7 @@
  * EAmoCRM class file.
  *
  * @package EAmoCRM
- * @version 1.0.0
+ * @version 1.1.0
  * @author dotzero <mail@dotzero.ru>
  * @link http://www.dotzero.ru/
  * @link https://github.com/dotzero/yii-amocrm
@@ -18,7 +18,7 @@
  * клиент для работы с API amoCRM используя библиотеку amocrm-php
  *
  * Требования:
- * - Yii Framework 1.1.14 or above
+ * - Yii Framework 1.1.14 или выше
  * - Composer
  *
  * Установка:
@@ -36,6 +36,12 @@
  *         'subdomain' => 'example', // Персональный поддомен на сайте amoCRM
  *         'login' => 'login@mail.com', // Логин на сайте amoCRM
  *         'hash' => '00000000000000000000000000000000', // Хеш на сайте amoCRM
+ *
+ *         // Для хранения ID полей можно воспользоваться хелпером
+ *         'fields' => [
+ *             'StatusId' => 10525225,
+ *             'ResponsibleUserId' => 697344,
+ *         ],
  *     ),
  * ),
  */
@@ -57,6 +63,11 @@ class EAmoCRM extends CApplicationComponent
     public $hash = null;
 
     /**
+     * @var array|CMap Экземпляр CMap для хранения номеров полей
+     */
+    public $fields = [];
+
+    /**
      * @var null|\AmoCRM\Client Экземпляр клиента для работы с amoCRM
      */
     private $client = null;
@@ -71,6 +82,8 @@ class EAmoCRM extends CApplicationComponent
         if (!class_exists('\\AmoCRM\\Client')) {
             throw new CException('EAmoCRM cannot work without \AmoCRM\Client class. Try to include composer autoloader (vendor/autoload.php).');
         }
+
+        $this->fields = new CMap($this->fields);
     }
 
     /**
